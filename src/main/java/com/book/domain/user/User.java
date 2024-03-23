@@ -1,8 +1,13 @@
 package com.book.domain.user;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
+
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import com.book.constant.user.UserEnum;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,16 +18,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import org.springframework.security.crypto.password.PasswordEncoder;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.book.constant.user.UserEnum;
-import com.book.handler.exception.CustomValidationException;
-
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -81,15 +76,5 @@ public class User {
 		this.updatedAt = updateAt;
 	}
 	
-	// 2-1. 계좌 비밀번호 확인
-	public void checkSamePassword(String rawPassword, PasswordEncoder passwordEncoder) {
-		if(!passwordEncoder.matches(rawPassword, password)) {
-					
-			Map<String, String> errorMap = new HashMap<>();
-			errorMap.put("password", "비밀번호가 틀립니다.");
-					
-			throw new CustomValidationException("비밀번호가 틀립니다.", errorMap);
-		}
-	}	
     
 }
