@@ -73,7 +73,6 @@ public class SecurityConfig {
 											   				  .anyRequest()  // 1-14. 1-12, 1-13가 아닌 요청은			
 											   				  .permitAll()  // 1-15. 모두 허용
 				)
-				
 				.addFilterAt(new JwtAuthenticationFilter(authenticationManager(configuration), jwtService), UsernamePasswordAuthenticationFilter.class) // 1-17. 폼로그인을 사용하지 않기 때문에 UsernamePasswordAuthenticationFilter 재정의한 JwtAuthenticationFilter를 등록헤서 인증처리를 진행한다.
 				.addFilterBefore(new JwtAuthorizationFilter(authenticationManager(configuration), userRepository, jwtService), UsernamePasswordAuthenticationFilter.class)  // 4-2. 권한 관리 필터 등록. -> SecurityFilterChain 앞에 addFilterBefore로 필터를 등록.
 				.build();
