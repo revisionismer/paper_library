@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.book.config.jwt.service.JwtService;
+import com.book.dto.ResponseDto;
 import com.book.dto.join.JoinReqDto;
 import com.book.dto.join.JoinRespDto;
 import com.book.service.user.UserService;
@@ -18,9 +20,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-
-import com.book.config.jwt.service.JwtService;
-import com.book.dto.ResponseDto;
 
 @RestController
 @RequestMapping("/api/users")
@@ -36,7 +35,7 @@ public class UserApiController {
 	public ResponseEntity<?> join(@RequestBody @Valid JoinReqDto joinReqDto, BindingResult bindingResult) {
 			
 		JoinRespDto joinRespDto = userService.join(joinReqDto);
-		
+			
 		return new ResponseEntity<>(new ResponseDto<>(1, "회원가입 성공", joinRespDto), HttpStatus.CREATED);
 	}
 	

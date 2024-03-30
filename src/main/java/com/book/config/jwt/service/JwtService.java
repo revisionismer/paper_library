@@ -93,6 +93,15 @@ public class JwtService {
 		response.setStatus(HttpStatus.UNAUTHORIZED.value());
 		response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 		
+		Cookie cookie = new Cookie("access_token", null);
+		cookie.setMaxAge(0);
+		
+		// 1-26. 쿠키는 항상 도메인 주소가 루트("/")로 설정되어 있어야 모든 요청에서 사용 가능.
+		cookie.setPath("/");
+		cookie.setSecure(true);
+		
+		response.addCookie(cookie);
+		
 		response.getWriter().write(result);
 	}
 	
