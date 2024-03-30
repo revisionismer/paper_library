@@ -35,8 +35,12 @@ public class UserService {
 		Optional<User> userOp = userRepository.findByUsername(joinReqDto.getUsername());
 		
 		if(userOp.isPresent()) {
-			
 			throw new CustomApiException("중복된 아이디입니다.");
+		}
+		
+		// 1-5. 웹화면에서 요청이 아닌(postman으로 호출) 경우 서버에서도 비밀번호 검증
+		if(!joinReqDto.getPassword().equals(joinReqDto.getPassword_chk())) {
+			throw new CustomApiException("비밀번호가 동일하지 않습니다.");
 		}
 		
 		// 1-2. 패스워드 인코딩 + 회원가입
@@ -47,7 +51,7 @@ public class UserService {
 		
 		visitRepository.save(visit);
 		
-		// 1-3. dto 응답
+		// 1-4. dto 응답
 		return new JoinRespDto(userPS);
 	}
 	

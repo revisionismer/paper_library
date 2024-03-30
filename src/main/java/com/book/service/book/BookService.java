@@ -1,5 +1,6 @@
 package com.book.service.book;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -34,10 +35,13 @@ public class BookService {
 	public BookRespDto saveBook(final BookReqDto bookReqDto, User loginUser) {
 		
 		if(loginUser.getRole() == UserEnum.ADMIN) {
-			Book newBook = new Book();
-			newBook.setTitle(bookReqDto.getTitle());
-			newBook.setAuthor(bookReqDto.getAuthor());
-		
+			Book bookEntity = new Book();
+			bookEntity.setTitle(bookReqDto.getTitle());
+			bookEntity.setAuthor(bookReqDto.getAuthor());
+			bookEntity.setCreatedAt(LocalDateTime.now());
+			
+			Book newBook = bookRepository.save(bookEntity);
+			
 			return new BookRespDto(newBook);
 		} else {
 			throw new CustomApiException("도서를 저장할 수 있는 권한이 없는 사용자입니다.");
@@ -72,7 +76,8 @@ public class BookService {
 	 * 1-3. 책 한건 조회 서비스
 	 * 
 	 **/
-	public BookRespDto findOneByBookId(Long bookId) {
+	public BookRespDto findOneByBookId(Long bookId , User loginUser) {
+		
 		Optional<Book> bookOp = bookRepository.findById(bookId);
 		
 		if(bookOp.isPresent()) {
