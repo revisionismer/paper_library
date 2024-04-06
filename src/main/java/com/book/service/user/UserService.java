@@ -10,8 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.book.domain.user.User;
 import com.book.domain.user.UserRepository;
-import com.book.domain.visit.Visit;
-import com.book.domain.visit.VisitRepository;
 import com.book.dto.join.JoinReqDto;
 import com.book.dto.join.JoinRespDto;
 import com.book.handler.exception.CustomApiException;
@@ -26,7 +24,6 @@ public class UserService {
 	private final Logger log = LoggerFactory.getLogger(getClass());
 
 	private final UserRepository userRepository;
-	private final VisitRepository visitRepository;
 	private final BCryptPasswordEncoder passwordEncoder;
 	
 	public JoinRespDto join(JoinReqDto joinReqDto) {
@@ -45,11 +42,6 @@ public class UserService {
 		
 		// 1-2. 패스워드 인코딩 + 회원가입
 		User userPS = userRepository.save(joinReqDto.toEntity(passwordEncoder));
-		
-		// 1-3. Visit 엔티티 생성
-		Visit visit = new Visit(0L, userPS);
-		
-		visitRepository.save(visit);
 		
 		// 1-4. dto 응답
 		return new JoinRespDto(userPS);

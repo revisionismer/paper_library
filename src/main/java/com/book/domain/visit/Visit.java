@@ -2,6 +2,10 @@ package com.book.domain.visit;
 
 import java.time.LocalDateTime;
 
+import com.book.domain.book.Book;
+import com.book.domain.user.User;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,10 +16,6 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.book.domain.user.User;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -40,6 +40,10 @@ public class Visit {
     @JoinColumn(name = "userId")
     @ManyToOne
     private User user;
+    
+    @JoinColumn(name = "bookId")
+    @ManyToOne
+    private Book book;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime createAt;
@@ -58,9 +62,10 @@ public class Visit {
 	}
     
     @Builder
-    public Visit(Long totalCount, User user) {
+    public Visit(Long totalCount, User user, Book book) {
         this.totalCount = totalCount;
         this.user = user;
+        this.book = book;
     }
     
 }

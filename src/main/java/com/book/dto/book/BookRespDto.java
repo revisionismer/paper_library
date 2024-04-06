@@ -1,6 +1,7 @@
 package com.book.dto.book;
 
 import com.book.domain.book.Book;
+import com.book.domain.visit.Visit;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -13,6 +14,8 @@ public class BookRespDto {
 	private Long id;
 	private String title;
 	private String author;
+	
+	private Long visitCnt;
 	
 	public BookRespDto() {
 		// TODO Auto-generated constructor stub
@@ -28,5 +31,12 @@ public class BookRespDto {
 		this.id = bookEntity.getId();
 		this.title = bookEntity.getTitle();
 		this.author = bookEntity.getAuthor();
+	}
+	
+	public BookRespDto(Book bookEntity, Visit visitEntity) {
+		this.id = bookEntity.getId();
+		this.title = bookEntity.getTitle();
+		this.author = bookEntity.getAuthor();
+		this.visitCnt = visitEntity.getTotalCount();
 	}
 }
