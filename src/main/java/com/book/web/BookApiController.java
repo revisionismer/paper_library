@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -52,5 +53,13 @@ public class BookApiController {
 		BookRespDto result = bookService.findOneByBookId(id, principalDetails.getUser());
 		
 		return new ResponseEntity<>(new ResponseDto<>(1, id + "번 책 정보 조회 성공", result), HttpStatus.OK);
+	}
+	
+	@PutMapping("/s/{bookId}/update")
+	public ResponseEntity<?> updateOnebyBookId(@RequestBody @Valid final BookReqDto bookUpdateReqDto, @PathVariable("bookId") Long id, @AuthenticationPrincipal PrincipalDetails principalDetails) {
+		
+		BookRespDto result = bookService.updateOneByBookId(id, bookUpdateReqDto, principalDetails.getUser());
+		
+		return new ResponseEntity<>(new ResponseDto<>(1, id + "번 책 정보 수정 성공", result), HttpStatus.OK);
 	}
 }
