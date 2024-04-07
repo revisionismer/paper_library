@@ -6,6 +6,7 @@ import com.book.domain.book.Book;
 import com.book.domain.user.User;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -42,7 +43,7 @@ public class Visit {
     private User user;
     
     @JoinColumn(name = "bookId")
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Book book;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
