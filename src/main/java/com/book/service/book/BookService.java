@@ -128,6 +128,29 @@ public class BookService {
 	}
 	
 	/**
+	 * 1-5. 책 정보 삭제 서비스
+	 * 
+	 **/
+	public void deleteOneByBookId(Long bookId, User loginUser) {
+		
+		Optional<Book> bookOp = bookRepository.findById(bookId);
+		
+		if(bookOp.isPresent()) {
+			Book findBook = bookOp.get();
+			
+			// 1-6. 책 엔티티와 연관관계 매핑된 방문객 엔티티부터 삭제하고
+			Visit visit = visitRepository.findByUserIdAndBookId(findBook.getUser().getId(), bookId);
+			visitRepository.delete(visit);
+			
+			// 1-7. 1-6이 정상적으로 삭제되면 삭제
+			bookRepository.deleteById(findBook.getId());
+			
+		} else {
+			throw new CustomApiException("해당 도서를 삭제하는데 실패하였습니다.");
+		}
+	}
+	
+	/**
 	 * 2-1. 조회 수 증가 서비스(더티 체킹)
 	 * 
 	 **/
