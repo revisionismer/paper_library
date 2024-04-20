@@ -84,7 +84,7 @@ public class JwtService {
 	
 	// 1-3.
 	public void sendErrorResponse(HttpServletResponse response, String message) throws IOException {
-
+		
 		ObjectMapper objectMapper = new ObjectMapper();
 		
 		String result = objectMapper.writeValueAsString(new ResponseDto<>(1, message, null));
