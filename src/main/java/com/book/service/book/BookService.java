@@ -70,9 +70,12 @@ public class BookService {
 //		return bookList.stream().map(BookRespDto::new).collect(Collectors.toList());
 		
 		List<BookRespDto> result = new ArrayList<>();
-		
+	
 		for(Book entity : bookList) {
-			result.add(new BookRespDto(entity));
+			// 1-8. 리스트 조회때 방문객 수도 가져오게 변경
+			Visit findVisit = visitRepository.findByUserIdAndBookId(entity.getUser().getId(), entity.getId());
+			
+			result.add(new BookRespDto(entity, findVisit));
 		}
 		
 		return result;
@@ -106,7 +109,7 @@ public class BookService {
 	}
 	
 	/**
-	 * 1-4. 책 정보 수정 서비스
+	 * 1-4. 책 정보 수정 서비스 
 	 * 
 	 **/
 	public BookRespDto updateOneByBookId(Long bookId, BookReqDto bookUpdateReqDto, User loginUser) {
@@ -114,14 +117,25 @@ public class BookService {
 		Optional<Book> bookOp = bookRepository.findById(bookId);
 		
 		if(bookOp.isPresent()) {
+			
 			Book findBook = bookOp.get();
 			findBook.setTitle(bookUpdateReqDto.getTitle());
 			findBook.setAuthor(bookUpdateReqDto.getAuthor());
 			findBook.setUpdatedAt(LocalDateTime.now());
 			
-			Book updatedBook = bookRepository.save(findBook);
+			// 2024-04-18 : 작성자 본인만 수정 가능 추가 
+			Long loginUserId = loginUser.getId();
+			Long saveBookUserId = findBook.getUser().getId();
 			
-			return new BookRespDto(updatedBook);
+			if(loginUserId == saveBookUserId) {
+				Book updatedBook = bookRepository.save(findBook);
+				
+				return new BookRespDto(updatedBook);
+			} else {
+				throw new CustomApiException("본인 글이 아니면 수정할 수 없습니다.");
+			}
+			
+			
 		} else {
 			throw new CustomApiException("해당 도서가 존재하지 않습니다.");
 		}
@@ -138,12 +152,21 @@ public class BookService {
 		if(bookOp.isPresent()) {
 			Book findBook = bookOp.get();
 			
-			// 1-6. 책 엔티티와 연관관계 매핑된 방문객 엔티티부터 삭제하고
-			Visit visit = visitRepository.findByUserIdAndBookId(findBook.getUser().getId(), bookId);
-			visitRepository.delete(visit);
+			// 2024-04-18 : 작성자 본인만 삭제 가능 추가
+			Long loginUserId = loginUser.getId();
+			Long saveBookUserId = findBook.getUser().getId();
 			
-			// 1-7. 1-6이 정상적으로 삭제되면 삭제
-			bookRepository.deleteById(findBook.getId());
+			if(loginUserId == saveBookUserId) {
+
+				// 1-6. 책 엔티티와 연관관계 매핑된 방문객 엔티티부터 삭제하고
+				Visit visit = visitRepository.findByUserIdAndBookId(findBook.getUser().getId(), bookId);
+				visitRepository.delete(visit);
+				
+				// 1-7. 1-6이 정상적으로 삭제되면 삭제
+				bookRepository.deleteById(findBook.getId());
+			} else {
+				throw new CustomApiException("본인 글이 아니면 삭제할 수 없습니다.");
+			}
 			
 		} else {
 			throw new CustomApiException("해당 도서를 삭제하는데 실패하였습니다.");
