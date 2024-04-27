@@ -18,7 +18,6 @@ public class BookRespDto {
 	private Long visitCnt;
 	
 	public BookRespDto() {
-		// TODO Auto-generated constructor stub
 	}
 	
 	public BookRespDto(Long id, String title, String author) {
