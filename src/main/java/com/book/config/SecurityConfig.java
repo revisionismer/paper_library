@@ -80,7 +80,7 @@ public class SecurityConfig {
 	}
 	
 	public CorsConfigurationSource configurationSource() {  // 2-1. CorsConfigurationSource로 cors 설정 -> 기존엔 filter로 만들어서 등록했었는데 이번엔 CorsConfigurationSource 객체를 이용해 등록.
-		log.info("CorsConfigurationSource cors 설정 생성 후 SecurityFilterChain에 등록 완료");
+		log.info("CorsConfigurationSource cors 설정 생성 후 SecurityFilterChain에 등록 후 실행 중");
 		
 		CorsConfiguration configuration = new CorsConfiguration();
 		configuration.addAllowedHeader("*");  // 2-2. 모든 header 응답 허용

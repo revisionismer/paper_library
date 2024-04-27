@@ -60,6 +60,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 			ObjectMapper om = new ObjectMapper();
 						
 			// 1-7. 먼저 username과 password 값을 받을 SignInDto를 생성해서 inputStream에서 SignInDto.class 형태로 받는다.
+		
 			SignInDto dto = om.readValue(request.getInputStream(), SignInDto.class);
 			
 			System.out.println(dto.getUsername() + ", " + dto.getPassword());	
