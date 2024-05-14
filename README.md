@@ -10,3 +10,4 @@
 7. BookService 작성자 본인만 수정, 삭제 가능하게 로직 수정
 8. board 엔티티 생성 및 게시글 쓰기(섬네일 사진 업로드 기능 포함), 게시글 리스트 보기 API 구현 완료
 9. board 쪽 코드 리팩토링
+10. BoardListRespDto에 totalCount 변수 Long에서 int로 자료형 변경

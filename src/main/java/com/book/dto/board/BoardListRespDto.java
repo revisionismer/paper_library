@@ -23,9 +23,8 @@ public class BoardListRespDto {
     private Integer prev;
     private Integer next;
     private List<Integer> pageNumbers;
-    private Long totalCount;
+    private int totalCount;
     private Boolean isPrev;
     private Boolean isNext;
-    
     private Boolean isFirst;
 }

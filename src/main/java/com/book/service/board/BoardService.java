@@ -105,7 +105,7 @@ public class BoardService {
 				boards.getNumber() - 1, 
 				boards.getNumber() + 1, 
 				pageNumbers, 
-				null,
+				boards.getContent().size(),
 				(boards.getNumber() - 1) != -1 ? true : false, 
 		        (boards.getNumber() + 1) != boards.getTotalPages() ? true : false, 
 		        (boards.getContent().size() == 0) ? true : false
