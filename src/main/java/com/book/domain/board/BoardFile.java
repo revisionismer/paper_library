@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -46,4 +47,25 @@ public class BoardFile {
  	@Column(nullable = true)
  	@JsonFormat(pattern = "yyyy-MM-dd HH:mm")
  	private LocalDateTime updatedAt;  
+ 	
+ 	public void createBoardFile(MultipartFile file, String createdFileName, Board updatedBoard) {
+ 		this.fileName = file.getOriginalFilename();
+		this.fileUrl = createdFileName;
+		this.downCnt = 0;
+		this.userId = updatedBoard.getUserId();
+		this.boardId =updatedBoard.getId();
+	
+		this.createdAt = LocalDateTime.now();
+ 	}
+ 	 	
+ 	public void updateBoardFile(MultipartFile file, String createdFileName, Board updatedBoard) {
+ 		this.fileName = file.getOriginalFilename();
+		this.fileUrl = createdFileName;
+		this.downCnt = 0;
+		this.userId = updatedBoard.getUserId();
+		this.boardId =updatedBoard.getId();
+	
+		this.updatedAt = LocalDateTime.now();
+	
+	}
 }

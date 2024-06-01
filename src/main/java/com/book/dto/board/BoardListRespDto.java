@@ -26,5 +26,6 @@ public class BoardListRespDto {
     private int totalCount;
     private Boolean isPrev;
     private Boolean isNext;
+    
     private Boolean isFirst;
 }
