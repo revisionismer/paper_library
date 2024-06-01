@@ -69,7 +69,7 @@ public class Board {
 	}
 	
 	/**
-	 * 5-10. 게시글 수정 
+	 * 5-10. 게시글 수정 : 변경 감지
 	 */
 	public void update(String title, String content) {
 		this.title = title;
@@ -78,24 +78,51 @@ public class Board {
 	}
 	
 	/**
-	 * 5-11. 조회수 증가 
-	 */
+	 * 5-11. 조회수 증가 : 변경 감지
+	 */ 
 	public void increaseHits() {
 		this.hits++;
 	}
 	
 	/**
-	 * 5-12. 게시글 삭제
+	 * 5-12. 게시글 삭제 : 변경 감지
 	 */
 	public void delete() {
 		this.deleteYn = 'Y';
 	}
 	
 	/**
-	 * 5-13. 게시글 이미지 업데이트 
+	 * 5-13. 게시글 이미지 업데이트 : 변경 감지
 	 **/
 	public void imageUpdate(String originalFilename, String thumnailImgFilename) {
 		this.originalImgFileName = originalFilename;
 		this.thumnailImgFileName = thumnailImgFilename;
+		this.updatedAt = LocalDateTime.now();
+	}
+	
+	/**
+	 * 5-14. 게시글 수정(이미지 포함) : 변경 감지
+	 * 
+	 */
+	public Board updateBoardWithImage(Board board) {
+		this.title = board.getTitle();
+		this.content = board.getContent();
+		this.thumnailImgFileName = board.getThumnailImgFileName();
+		this.originalImgFileName = board.getOriginalImgFileName();
+		this.updatedAt = LocalDateTime.now();
+		
+		return this;
+	}
+	
+	/**
+	 * 5-14. 게시글 수정(이미지 포함) : 변경 감지
+	 * 
+	 */
+	public Board updateBoard(Board board) {
+		this.title = board.getTitle();
+		this.content = board.getContent();
+		this.updatedAt = LocalDateTime.now();
+		
+		return this;
 	}
 }
