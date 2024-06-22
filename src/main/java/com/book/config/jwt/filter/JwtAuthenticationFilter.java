@@ -38,7 +38,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 	
 	byte[] secretKeyBytes = secretKey.getBytes();	
 	
-	// 1-2. 
+	// 1-2.
 	private AuthenticationManager authenticationManager;
 	
 	private JwtService jwtService;

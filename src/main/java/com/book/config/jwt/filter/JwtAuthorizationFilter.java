@@ -71,7 +71,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter { // 1-1. 
 			// 1-4. jwt 헤더 스트링 값을 request에서 뽑아본다.
 			String jwtHeader = request.getHeader(JwtProperties.HEADER_STRING);
 			
-			// 1-5. JWT 토큰을 검증해서 header 값이  있는지 확인하고 있다면 Bearer로 시작하는지까지 체킹한다.
+			// 1-5. JWT 토큰을 검증해서 header 값이 있는지 확인하고 있다면 Bearer로 시작하는지까지 체킹한다.
 			if(jwtHeader == null || !jwtHeader.startsWith(JwtProperties.TOKEN_PREFIX)) {
 				// 1-6. 1-4이라면 필터를 계속 타게 한다.
 				chain.doFilter(request, response);
@@ -136,7 +136,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter { // 1-1. 
 						SecurityContextHolder.getContext().setAuthentication(authentication);
 					}
 					
-					// 1-20. 로그인시 생성되어 db 저장된  refresh token 값을 가져온다.
+					// 1-20. 로그인시 생성되어 db에 저장된 refresh token 값을 가져온다.
 					String db_refresh_token = findUser.getRefreshToken();
 					
 					// 1-21. 리프레시 토큰이 유효한 토큰인지 검증하는 로직
@@ -187,7 +187,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter { // 1-1. 
 						// 1-30. header에 새로운 access_token 장착
 						response.addHeader(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX + access_token);
 						
-						// 1-31. 1-29에서 만든 새로운 access_token로 쿠키 생성 하고 편집 못하게 암호화.
+						// 1-31. 1-29에서 만든 새로운 access_token으로 쿠키 생성 하고 편집 못하게 암호화.
 						Cookie cookie = new Cookie("access_token", access_token);
 						
 						// 1-32. 쿠키는 항상 도메인 주소가 루트("/")로 설정되어 있어야 모든 요청에서 사용 가능.

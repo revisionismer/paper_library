@@ -17,8 +17,7 @@ public class BookRespDto {
 	
 	private Long visitCnt;
 	
-	public BookRespDto() {
-	}
+	public BookRespDto() {}
 	
 	public BookRespDto(Long id, String title, String author) {
 		this.id = id;

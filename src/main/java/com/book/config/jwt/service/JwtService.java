@@ -35,6 +35,7 @@ import lombok.extern.slf4j.Slf4j;
 @Data
 @Slf4j
 public class JwtService {
+	
 	private final UserRepository userRepository;
 
 	private static String secretKey = JwtProperties.SECRET_KEY;

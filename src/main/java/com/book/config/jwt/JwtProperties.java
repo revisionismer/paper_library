@@ -9,6 +9,4 @@ public interface JwtProperties {
 	public static final Long EXPIRATION_TIME = 1000 * 60L * 60L * 1L;  // 1-2. 만료시간
 	public static final String TOKEN_PREFIX = "Bearer ";  // 1-3. 토큰 앞에 붙는 문자
 	public static final String HEADER_STRING = "Authorization";  // 1-4.
-	public static final String HEADER_REFRESH_STRING = "Authorization-refresh";  // 1-5.
-	
 }
