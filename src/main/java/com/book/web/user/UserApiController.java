@@ -1,4 +1,4 @@
-package com.book.web;
+package com.book.web.user;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +28,6 @@ import lombok.RequiredArgsConstructor;
 public class UserApiController {
 
 	private final UserService userService;
-	
 	private final JwtService jwtService;
 	
 	@PostMapping("/join")

@@ -33,6 +33,9 @@ public class BoardInfoRespDto {
 	
 	private Long boardFileId;
 	
+	private boolean isLove;
+	private Long totalLoveCnt;
+	
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm")
 	private LocalDateTime createdAt;
 	
@@ -53,6 +56,26 @@ public class BoardInfoRespDto {
 		this.isPageOwner = isPageOwner;
 		
 		this.boardFileId = boardFile.getId();
+		
+	}
+	
+	public BoardInfoRespDto(Board board, BoardFile boardFile, boolean isPageOwner, Boolean isLove, Long totalLoveCnt) {
+		this.id = board.getId();
+		this.title = board.getTitle();
+		this.content = board.getContent();
+		this.writer = board.getWriter();
+		this.hits = board.getHits();
+		this.deleteYn = board.getDeleteYn();
+		
+		this.thumnailImgFileName = board.getThumnailImgFileName();
+		this.originalImgFileName = board.getOriginalImgFileName();
+		
+		this.isPageOwner = isPageOwner;
+		
+		this.boardFileId = boardFile.getId();
+		
+		this.isLove = isLove;
+		this.totalLoveCnt = totalLoveCnt;
 		
 	}
 	

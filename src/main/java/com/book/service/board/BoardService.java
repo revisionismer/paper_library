@@ -22,6 +22,8 @@ import com.book.domain.board.Board;
 import com.book.domain.board.BoardFile;
 import com.book.domain.board.BoardFileRepository;
 import com.book.domain.board.BoardRepository;
+import com.book.domain.love.Love;
+import com.book.domain.love.LoveRepository;
 import com.book.domain.user.User;
 import com.book.dto.board.BoardInfoRespDto;
 import com.book.dto.board.BoardListRespDto;
@@ -42,6 +44,7 @@ public class BoardService {
 	
 	private final BoardRepository boardRepository;
 	private final BoardFileRepository boardFileRepository;
+	private final LoveRepository loveRepository;
 	private final FileService fileService;
 	
 	private final IBoardMapper boardMapper; 
@@ -140,7 +143,7 @@ public class BoardService {
 		
 	}
 	
-	// 5-1. 게시글 1건 읽기
+	// 5-1. 게시글 1건 읽기 : 좋아요 기능 추가(2024-06-18)
 	public BoardInfoRespDto readBoardOne(Long boardId, User loginUser) {
 		
 		Optional<Board> boardOp = boardRepository.findById(boardId);
@@ -150,6 +153,8 @@ public class BoardService {
 			if(loginUser.getRole() == UserEnum.ADMIN || loginUser.getRole() == UserEnum.USER) {
 				
 				Board findBoard = boardOp.get();
+				
+				Optional<Love> loveOp = loveRepository.mFindLoveByPageOwnerIdAndUserIdAndBoardId(findBoard.getUserId(), loginUser.getId(), findBoard.getId());
 				
 				// 2024-05-21 : 본인이 아닐때만 조회수 증가
 				if(findBoard.getUserId() != loginUser.getId()) {
@@ -167,7 +172,18 @@ public class BoardService {
 					boardFile = boardFileOp.get();
 				}
 				
-				return new BoardInfoRespDto(findBoard, boardFile, loginUser.getId() == findBoard.getUserId() ? true : false);
+				Long totalLoveCnt = loveRepository.countByboardId(boardId);
+				
+				if(loveOp.isPresent()) {
+					
+					return new BoardInfoRespDto(findBoard, boardFile, loginUser.getId() == findBoard.getUserId() ? true : false, true, totalLoveCnt);
+					
+				} else {
+					
+					return new BoardInfoRespDto(findBoard, boardFile, loginUser.getId() == findBoard.getUserId() ? true : false, false, totalLoveCnt);
+					
+				}
+				
 				
 			} else {
 				throw new CustomApiException("권한이 없는 사용자 입니다.");

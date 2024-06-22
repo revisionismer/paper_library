@@ -12,3 +12,4 @@
 9. board 쪽 코드 리팩토링
 10. BoardListRespDto에 totalCount 변수 Long에서 int로 자료형 변경
 11. 게시글 수정(섬네일 사진 업로드 수정 기능 포함) 기능 추가 및 mybatis 버전 3.0.3으로 변경하고 게시판 페이징 API 기능도 추가
+12. 게시글 좋아요 API 구현 완료 및 web 폴더 구조 변경

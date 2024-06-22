@@ -115,7 +115,7 @@ public class Board {
 	}
 	
 	/**
-	 * 5-14. 게시글 수정(이미지 포함) : 변경 감지
+	 * 5-15. 게시글 수정(이미지 포함 X) : 변경 감지
 	 * 
 	 */
 	public Board updateBoard(Board board) {

@@ -1,4 +1,4 @@
-package com.book.web;
+package com.book.web.book;
 
 import java.util.List;
 

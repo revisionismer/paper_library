@@ -16,6 +16,7 @@ import lombok.Setter;
 
 @Getter @Setter
 public class JoinReqDto {
+	
 	@Pattern(regexp = "^[a-zA-Z0-9]{2,20}$", message = "영문과 숫자를 조합해서 2~20자 이내로 작성해주세요.") // 2-1. 영문, 숫자는 되고, 길이는 최소 2~20자 이내
 	@NotEmpty  // 1-1. null이거나 공백일 수 없다.
 	private String username;  
