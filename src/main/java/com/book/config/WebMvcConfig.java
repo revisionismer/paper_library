@@ -12,6 +12,9 @@ public class WebMvcConfig implements WebMvcConfigurer {  // 1-1.
 	@Value("${board.path}")
 	private String boardFolder;
 	
+	@Value("${user.path}")
+	private String userFolder;
+	
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 	
@@ -21,5 +24,12 @@ public class WebMvcConfig implements WebMvcConfigurer {  // 1-1.
 				.setCachePeriod(60*10*6)   // 1-9. 60초 * 10 = 600초 = 10분, * 6을 하면 60분 = 1시간 
 				.resourceChain(true)  // 1-10. true = resourceChain 발동
 				.addResolver(new PathResourceResolver()); // 1-11. 등록
+		
+		registry
+				.addResourceHandler("/userImg/**")
+				.addResourceLocations("file:///" + userFolder)
+				.setCachePeriod(60*10*6)   
+				.resourceChain(true)  
+				.addResolver(new PathResourceResolver()); 
 	}
 }
